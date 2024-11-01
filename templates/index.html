@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador de Séries</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .btn-custom {
+            background-color: #1d4b8f;
+            color: white;
+        }
+        .btn-custom:hover {
+            background-color: #5476a8;
+        }
+        table {
+            margin-top: 20px;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ADICIONAR SÉRIE</h1>
+        <form method="POST" action="/" class="text-center mb-4">
+            <div class="form-group">
+                <input type="text" name="title" class="form-control d-inline-block" style="width: 300px;" placeholder="Título da Série" required>
+                <input type="submit" value="Adicionar" class="btn btn-custom">
+            </div>
+        </form>
+
+        <h1>Séries</h1>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for serie in series %}
+                    <tr>
+                        <td>{{ serie.title }}</td>
+                        <td>
+                            <form method="POST" action="/update" class="d-inline">
+                                <input type="hidden" name="oldtitle" value="{{ serie.title }}">
+                                <input type="text" name="newtitle" value="{{ serie.title }}" class="form-control d-inline" style="width: 150px;" required>
+                                <input type="submit" value="Atualizar" class="btn btn-custom">
+                            </form>
+                            <form method="POST" action="/delete" class="d-inline">
+                                <input type="hidden" name="title" value="{{ serie.title }}">
+                                <input type="submit" value="Deletar" class="btn btn-danger">
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
